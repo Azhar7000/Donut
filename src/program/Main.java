@@ -24,6 +24,8 @@ public class Main extends javax.swing.JFrame {
     private static OrderDAO orderDAO;
 
 
+
+
     public Main() {
         initComponents();
 
@@ -70,7 +72,7 @@ public class Main extends javax.swing.JFrame {
         jButtonDeleteOrder = new javax.swing.JButton();
         jLabelItemName = new javax.swing.JLabel();
         jTextFieldItemName = new javax.swing.JTextField();
-        dateTimePickerOrderDateTime = new com.github.lgooddatepicker.components.DateTimePicker();
+
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Oak Donut Shop");  //title name
@@ -312,7 +314,7 @@ public class Main extends javax.swing.JFrame {
                             .addComponent(jLabelItemName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(dateTimePickerOrderDateTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+
                             .addComponent(jTextFieldOrderPrice)
                             .addComponent(jTextFieldOrderID)
                             .addComponent(jTextFieldItemName)
@@ -340,9 +342,9 @@ public class Main extends javax.swing.JFrame {
                             .addComponent(jTextFieldOrderPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabelOrderPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanelOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelOrderDateTime, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(dateTimePickerOrderDateTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+//                        .addGroup(jPanelOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+//                            .addComponent(jLabelOrderDateTime, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                            .addComponent(dateTimePickerOrderDateTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextFieldItemName, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -403,8 +405,8 @@ public class Main extends javax.swing.JFrame {
          * LocalDate object is inserted into datePicker.setDate() to set the value of the dataPicker.
          * LocalTime object is inserted into timePicker.setTime() to set the value of the timePicker.
          */
-        dateTimePickerOrderDateTime.datePicker.setDate(date1);
-        dateTimePickerOrderDateTime.timePicker.setTime(time1);
+//        dateTimePickerOrderDateTime.datePicker.setDate(date1);
+//        dateTimePickerOrderDateTime.timePicker.setTime(time1);
         jTextFieldItemName.setText(model.getValueAt(i, 5).toString());
     }//GEN-LAST:event_jTableOrderMouseClicked
 
@@ -753,7 +755,7 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.github.lgooddatepicker.components.DateTimePicker dateTimePickerOrderDateTime;
+
     private javax.swing.JButton jButtonDeleteCustomer;
     private javax.swing.JButton jButtonDeleteOrder;
     private javax.swing.JButton jButtonInsertCustomer;
