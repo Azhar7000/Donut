@@ -1,0 +1,6 @@
+CREATE TABLE OD_MenuItem(
+    MenuItem_ID int NOT NULL PRIMARY KEY,
+    Item_Name VARCHAR(20) NOT NULL,
+    Category VARCHAR(20) NOT NULL,
+    Unit_Price DECIMAL(10,2) NOT NULL
+);
