@@ -28,6 +28,20 @@ import java.awt.*;
 public class Main extends javax.swing.JFrame {
     private DefaultTableModel model;
     private JLabel subtotalValue,taxValue,totalValue;
+    private void updateTotals(JLabel subtotalValue, JLabel taxValue, JLabel totalValue,DefaultTableModel model) {
+        double subtotal = 0;
+
+        for (int i = 0; i < model.getRowCount(); i++) {
+            subtotal += Double.parseDouble(model.getValueAt(i, 4).toString());
+        }
+
+        double tax = subtotal * 0.06;
+        double total = subtotal + tax;
+
+        subtotalValue.setText(String.format("$%.2f", subtotal));
+        taxValue.setText(String.format("$%.2f", tax));
+        totalValue.setText(String.format("$%.2f", total));
+    }
     public Main() {
         // Window setup
         setTitle("Oak Donuts");
@@ -193,7 +207,7 @@ public class Main extends javax.swing.JFrame {
         subtotalLabel.setBounds(540, 380, 100, 25);
         rightPanel.add(subtotalLabel);
 
-        JLabel subtotalValue = new JLabel("$0.00");
+        subtotalValue = new JLabel("$0.00");
         subtotalValue.setBounds(650, 380, 100, 25);
         rightPanel.add(subtotalValue);
 
@@ -202,7 +216,7 @@ public class Main extends javax.swing.JFrame {
         taxLabel.setBounds(540, 410, 100, 25);
         rightPanel.add(taxLabel);
 
-        JLabel taxValue = new JLabel("$0.00");
+        taxValue = new JLabel("$0.00");
         taxValue.setBounds(650, 410, 100, 25);
         rightPanel.add(taxValue);
 
@@ -212,7 +226,7 @@ public class Main extends javax.swing.JFrame {
         totalLabel.setFont(new Font("Arial", Font.BOLD, 16));
         rightPanel.add(totalLabel);
 
-        JLabel totalValue = new JLabel("$0.00");
+        totalValue = new JLabel("$0.00");
         totalValue.setBounds(650, 440, 100, 30);
         totalValue.setFont(new Font("Arial", Font.BOLD, 16));
         rightPanel.add(totalValue);
@@ -225,7 +239,7 @@ public class Main extends javax.swing.JFrame {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
 
-                DefaultTableModel model = (DefaultTableModel) orderTable.getModel();
+                model = (DefaultTableModel) orderTable.getModel();
                 model.setRowCount(0); // clears table
 
                 subtotalValue.setText("$0.00");
@@ -243,7 +257,7 @@ public class Main extends javax.swing.JFrame {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
 
-                DefaultTableModel model = (DefaultTableModel) orderTable.getModel();
+                model = (DefaultTableModel) orderTable.getModel();
 
                 if (model.getRowCount() == 0) {
                     JOptionPane.showMessageDialog(null, "Your order is empty.");
@@ -275,20 +289,7 @@ public class Main extends javax.swing.JFrame {
 
         });
     }
-    private void updateTotals(JLabel subtotalValue, JLabel taxValue, JLabel totalValue,DefaultTableModel model) {
-        double subtotal = 0;
 
-        for (int i = 0; i < model.getRowCount(); i++) {
-            subtotal += Double.parseDouble(model.getValueAt(i, 4).toString());
-        }
-
-        double tax = subtotal * 0.06;
-        double total = subtotal + tax;
-
-        subtotalValue.setText(String.format("$%.2f", subtotal));
-        taxValue.setText(String.format("$%.2f", tax));
-        totalValue.setText(String.format("$%.2f", total));
-    }
 
 
 }
