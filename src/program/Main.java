@@ -6,8 +6,10 @@
 package program;
 
 
-//import java.util.List;
-//import javax.swing.JOptionPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.util.List;
+import javax.swing.JOptionPane;
 //import javax.swing.table.TableModel;
 //import java.util.Optional;
 //import java.time.LocalDate;
@@ -24,6 +26,8 @@ import java.awt.*;
  * @author Gokhan
  */
 public class Main extends javax.swing.JFrame {
+    private DefaultTableModel model;
+    private JLabel subtotalValue,taxValue,totalValue;
     public Main() {
         // Window setup
         setTitle("Oak Donuts");
@@ -133,14 +137,52 @@ public class Main extends javax.swing.JFrame {
         JButton addToOrderBtn = new JButton("Add to Order");
         addToOrderBtn.setBounds(230, 560, 120, 30);
         leftPanel.add(addToOrderBtn);
+        addToOrderBtn.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+
+                String item = menuList.getSelectedValue();
+                if (item == null) {
+                    JOptionPane.showMessageDialog(null, "Please select an item from the menu.");
+                    return;
+                }
+
+                String itemName = item.split("\\$")[0].trim();
+
+                String icing = icingCombo.getSelectedItem().toString();
+                String filling = fillingCombo.getSelectedItem().toString();
+                String options = "Icing: " + icing + ", Filling: " + filling;
+                double unitPrice = Double.parseDouble(item.substring(item.indexOf("$") + 1));
+
+                int qty;
+                try {
+                    qty = Integer.parseInt(qtyField.getText());
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Invalid quantity");
+                    return;
+                }
+
+
+                double total = unitPrice * qty;
+
+                model.addRow(new Object[]{
+                        itemName, options, qty,
+                        String.format("%.2f", unitPrice),
+                        String.format("%.2f", total)
+                });
+
+                updateTotals(subtotalValue, taxValue, totalValue, model);
+            }
+        });
+
+
 
         //RIGHT SIDE(Order table, totals)
 
         // Order table
         String[] columns = {"Item", "Options", "Qty", "Price", "Total"};
-        Object[][] tableData = new Object[0][5];
-
-        JTable orderTable = new JTable(tableData, columns);
+        model = new DefaultTableModel(columns, 0);
+        JTable orderTable = new JTable(model);
         JScrollPane orderScroll = new JScrollPane(orderTable);
 
         orderScroll.setBounds(20, 20, 740, 350);
@@ -179,10 +221,50 @@ public class Main extends javax.swing.JFrame {
         JButton clearBtn = new JButton("Clear");
         clearBtn.setBounds(540, 500, 100, 40);
         rightPanel.add(clearBtn);
+        clearBtn.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+
+                DefaultTableModel model = (DefaultTableModel) orderTable.getModel();
+                model.setRowCount(0); // clears table
+
+                subtotalValue.setText("$0.00");
+                taxValue.setText("$0.00");
+                totalValue.setText("$0.00");
+            }
+        });
+
+
 
         JButton checkoutBtn = new JButton("Checkout");
         checkoutBtn.setBounds(650, 500, 120, 40);
         rightPanel.add(checkoutBtn);
+        checkoutBtn.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+
+                DefaultTableModel model = (DefaultTableModel) orderTable.getModel();
+
+                if (model.getRowCount() == 0) {
+                    JOptionPane.showMessageDialog(null, "Your order is empty.");
+                    return;
+                }
+
+                String total = totalValue.getText();
+
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Thank you for your order!\nYour total is: " + total,
+                        "Order Complete",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+            }
+        });
+
+
+
+
+
     }
 
 
@@ -190,7 +272,22 @@ public class Main extends javax.swing.JFrame {
         SwingUtilities.invokeLater(() -> {
             Main gui = new Main();
             gui.setVisible(true);
+
         });
+    }
+    private void updateTotals(JLabel subtotalValue, JLabel taxValue, JLabel totalValue,DefaultTableModel model) {
+        double subtotal = 0;
+
+        for (int i = 0; i < model.getRowCount(); i++) {
+            subtotal += Double.parseDouble(model.getValueAt(i, 4).toString());
+        }
+
+        double tax = subtotal * 0.06;
+        double total = subtotal + tax;
+
+        subtotalValue.setText(String.format("$%.2f", subtotal));
+        taxValue.setText(String.format("$%.2f", tax));
+        totalValue.setText(String.format("$%.2f", total));
     }
 
 
