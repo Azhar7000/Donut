@@ -24,10 +24,13 @@ import java.awt.*;
 /**
  *
  * @author Gokhan
+ *
+ * GUI
  */
 public class Main extends javax.swing.JFrame {
     private DefaultTableModel model;
     private JLabel subtotalValue,taxValue,totalValue;
+    //update total method
     private void updateTotals(JLabel subtotalValue, JLabel taxValue, JLabel totalValue,DefaultTableModel model) {
         double subtotal = 0;
 
@@ -249,7 +252,7 @@ public class Main extends javax.swing.JFrame {
         });
 
 
-
+         //checkout button
         JButton checkoutBtn = new JButton("Checkout");
         checkoutBtn.setBounds(650, 500, 120, 40);
         rightPanel.add(checkoutBtn);
